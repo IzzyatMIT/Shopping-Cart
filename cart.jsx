@@ -100,19 +100,25 @@ const Products = (props) => {
     setCart([...cart, ...item]);
     //doFetch(query);
   };
-  const deleteCartItem = (index) => {
-    let newCart = cart.filter((item, i) => index != i);
+  const deleteCartItem = (deletindex) => {
+    let newCart = cart.filter((item, i) => deletindex != i);
+    let x = cart.filter((item, index) => deletindex == index);
+    let newItems = items.map((item, index) => {
+      if (item.name == x[0].name) item.instock = item.instock + 1;
+      return item;
+    });
     setCart(newCart);
+    setItems(newItems);
   };
   const photos = ['apple.jpg', 'orange.jpg', 'beans.jpg', 'cabbage.jpg'];
 
   let list = items.map((item, index) => {
-    //let n = index + 1049;
-    //let url = "https://picsum.photos/id/" + n + "/50/50";
+    let n = index + 1049;
+    let thingy = 'https://picsum.photos/' + n;
 
     return (
       <li key={index}>
-        <Image src={photos[index % 4]} width={70} roundedCircle></Image>
+        <Image src={thingy} width={70} roundedCircle></Image>
         <Button variant="primary" size="large">
           {item.name}:{item.cost}-Stock={item.instock}
         </Button>
